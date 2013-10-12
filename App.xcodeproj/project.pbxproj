@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BBBB3DD617C76EE30075D896 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBBB3DD517C76EE30075D896 /* main.cpp */; };
 		BBBB3DD817C76EE30075D896 /* App.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBBB3DD717C76EE30075D896 /* App.1 */; };
+		BBF9E89E18092075005B4F9F /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBF9E89D18092075005B4F9F /* Thread.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +26,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BB02A1B21807FE3D00F68266 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
+		BB02A1B5180806F300F68266 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mutex.h; sourceTree = "<group>"; };
 		BBBB3DD217C76EE30075D896 /* App */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = App; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBBB3DD517C76EE30075D896 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		BBBB3DD717C76EE30075D896 /* App.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = App.1; sourceTree = "<group>"; };
+		BBF9E89B18090F92005B4F9F /* Condition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Condition.h; sourceTree = "<group>"; };
+		BBF9E89C1809141F005B4F9F /* Thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
+		BBF9E89D18092075005B4F9F /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,11 @@
 			children = (
 				BBBB3DD517C76EE30075D896 /* main.cpp */,
 				BBBB3DD717C76EE30075D896 /* App.1 */,
+				BB02A1B21807FE3D00F68266 /* Queue.h */,
+				BB02A1B5180806F300F68266 /* Mutex.h */,
+				BBF9E89B18090F92005B4F9F /* Condition.h */,
+				BBF9E89C1809141F005B4F9F /* Thread.h */,
+				BBF9E89D18092075005B4F9F /* Thread.cpp */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -92,7 +103,7 @@
 		BBBB3DCA17C76EE30075D896 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Liu Enze";
 			};
 			buildConfigurationList = BBBB3DCD17C76EE30075D896 /* Build configuration list for PBXProject "App" */;
@@ -118,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBBB3DD617C76EE30075D896 /* main.cpp in Sources */,
+				BBF9E89E18092075005B4F9F /* Thread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,7 +140,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -161,7 +172,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -216,6 +226,7 @@
 				BBBB3DDD17C76EE30075D896 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
