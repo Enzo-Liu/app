@@ -18,7 +18,7 @@ private:
 public:
     Condition()
     {
-        pthread_cond_init(&m_cond,nullptr);
+        pthread_cond_init(&m_cond,NULL);
     }
     
     ~Condition()

@@ -9,9 +9,35 @@
 #ifndef App_Thread_h
 #define App_Thread_h
 
-class Thread
+#include<pthread.h>
+
+class Runable
 {
-    
+public:
+    virtual ~Runable(){};
+    virtual void run()=0;
 };
+
+#define THREAD_CALL
+typedef void* (*ThreadCall)( void* aArg );
+
+class Thread : public Runable
+{
+public:
+    Thread();
+    virtual ~Thread(){};
+    
+    void start();
+    
+    pthread_t getId() { return _tid; }
+    
+protected:
+    virtual void run() = 0;
+
+    pthread_t      _tid;
+private:
+    static void* THREAD_CALL ThreadFunc( void* aArg );
+};
+
 
 #endif

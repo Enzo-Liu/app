@@ -10,6 +10,7 @@
 #define __App__Mutex__
 
 #include <iostream>
+#include <pthread.h>
 
 class Mutex
 {
@@ -18,7 +19,7 @@ private:
 public:
     Mutex()
     {
-        pthread_mutex_init(&mutex, nullptr);
+        pthread_mutex_init(&mutex, NULL);
     }
     ~Mutex()
     {
@@ -42,7 +43,7 @@ public:
 class Lock
 {
 private:
-    Mutex* m_mutex=nullptr;
+    Mutex* m_mutex=NULL;
 public:
     Lock(Mutex &mutex)
     {
@@ -52,7 +53,7 @@ public:
     ~Lock()
     {
         m_mutex->unlock();
-        m_mutex=nullptr;
+        m_mutex=NULL;
     }
 };
 

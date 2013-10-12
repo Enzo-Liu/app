@@ -22,7 +22,7 @@ template <typename Msg>
 class Fifo
 {
 private:
-    deque<Msg*>* m_deque=nullptr;
+    deque<Msg*>* m_deque=NULL;
     int m_size = 0;
     int m_maxSize = 0;
 protected:
@@ -30,7 +30,7 @@ protected:
     {
         m_deque->clear();
         delete m_deque;
-        m_deque = nullptr;
+        m_deque = NULL;
         m_size = 0;
         m_maxSize = 0;
     }
@@ -55,7 +55,7 @@ protected:
     Msg* pop()
     {
         Msg* cur = m_deque->back();
-        if(cur != nullptr)
+        if(cur != NULL)
         {
             m_deque->pop_back();
             m_size--;
