@@ -27,7 +27,7 @@ public:
     }
     void lock()
     {
-        pthread_mutex_trylock(&mutex);
+        pthread_mutex_lock(&mutex);
     }
     void unlock()
     {

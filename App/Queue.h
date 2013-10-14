@@ -22,42 +22,42 @@ template <typename Msg>
 class Fifo
 {
 private:
-    deque<Msg*>* m_deque=NULL;
+    deque<Msg*> m_deque;
     int m_size = 0;
     int m_maxSize = 0;
 protected:
     ~Fifo()
     {
-        m_deque->clear();
-        delete m_deque;
-        m_deque = NULL;
+        m_deque.clear();
         m_size = 0;
         m_maxSize = 0;
     }
     
     Fifo(int size)
     {
-        m_deque = new deque<Msg*>();
         m_maxSize = size;
     }
     
     void push(Msg* msg)
     {
+        if (msg==NULL) {
+            return;
+        }
         //if the size is larger than limit
         //throw it away
         if(m_size<m_maxSize)
         {
-            m_deque->push_front(msg);
+            m_deque.push_back(msg);
             m_size++;
         }
     }
     
     Msg* pop()
     {
-        Msg* cur = m_deque->back();
+        Msg* cur = m_deque.front();
         if(cur != NULL)
         {
-            m_deque->pop_back();
+            m_deque.pop_front();
             m_size--;
         }
         return cur;
@@ -68,11 +68,6 @@ public:
     {
         return m_size;
     }
-    
-    bool isEmpty()
-    {
-        return m_size==0;
-    }
 };
 
 template <typename Msg>
@@ -80,7 +75,7 @@ class BlockingQueue:public Fifo<Msg>
 {
 private:
     Mutex mutex;
-    Condition condition;
+    Condition notEmpty;
 public:
     BlockingQueue(int size = DEFAULT_SIZE):Fifo<Msg>(size)
     {
@@ -89,22 +84,33 @@ public:
     Msg* pop()
     {
         Lock lock(mutex);
-        if (Fifo<Msg>::isEmpty()) {
-            condition.wait(mutex);
+        
+        while (Fifo<Msg>::size()==0) {
+            notEmpty.wait(mutex);
         }
+        
         return Fifo<Msg>::pop();
     }
     
     void push(Msg* msg)
     {
+        if (msg==NULL) {
+            return;
+        }
         Lock lock(mutex);
         
-        if (Fifo<Msg>::isEmpty()) {
-            condition.notify();
-        }
-        
         Fifo<Msg>::push(msg);
+        
+        if(Fifo<Msg>::size()==1)
+        notEmpty.notify();
+        
         return;
+    }
+    
+    bool isEmpty()
+    {
+        Lock lock(mutex);
+        return Fifo<Msg>::size()==0;
     }
 };
 

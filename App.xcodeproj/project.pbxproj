@@ -10,6 +10,9 @@
 		BBBB3DD617C76EE30075D896 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBBB3DD517C76EE30075D896 /* main.cpp */; };
 		BBBB3DD817C76EE30075D896 /* App.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBBB3DD717C76EE30075D896 /* App.1 */; };
 		BBF9E89E18092075005B4F9F /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBF9E89D18092075005B4F9F /* Thread.cpp */; };
+		BBF9E8A218095C27005B4F9F /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBF9E8A018095C27005B4F9F /* Test.cpp */; };
+		BBF9E8A918095D1D005B4F9F /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBF9E8A718095D1D005B4F9F /* UdpSocket.cpp */; };
+		BBF9E8AF18095D5A005B4F9F /* UdpSlice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBF9E8AD18095D5A005B4F9F /* UdpSlice.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +37,12 @@
 		BBF9E89B18090F92005B4F9F /* Condition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Condition.h; sourceTree = "<group>"; };
 		BBF9E89C1809141F005B4F9F /* Thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
 		BBF9E89D18092075005B4F9F /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
+		BBF9E8A018095C27005B4F9F /* Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Test.cpp; sourceTree = "<group>"; };
+		BBF9E8A118095C27005B4F9F /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		BBF9E8A718095D1D005B4F9F /* UdpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UdpSocket.cpp; path = ../UdpSocket.cpp; sourceTree = "<group>"; };
+		BBF9E8A818095D1D005B4F9F /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UdpSocket.h; path = ../UdpSocket.h; sourceTree = "<group>"; };
+		BBF9E8AD18095D5A005B4F9F /* UdpSlice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UdpSlice.cpp; sourceTree = "<group>"; };
+		BBF9E8AE18095D5A005B4F9F /* UdpSlice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSlice.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,15 +75,37 @@
 		BBBB3DD417C76EE30075D896 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				BBF9E8A318095CF8005B4F9F /* udp */,
+				BBF9E89F18092FC2005B4F9F /* basic */,
 				BBBB3DD517C76EE30075D896 /* main.cpp */,
 				BBBB3DD717C76EE30075D896 /* App.1 */,
+				BBF9E8A018095C27005B4F9F /* Test.cpp */,
+				BBF9E8A118095C27005B4F9F /* Test.h */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		BBF9E89F18092FC2005B4F9F /* basic */ = {
+			isa = PBXGroup;
+			children = (
 				BB02A1B21807FE3D00F68266 /* Queue.h */,
 				BB02A1B5180806F300F68266 /* Mutex.h */,
 				BBF9E89B18090F92005B4F9F /* Condition.h */,
 				BBF9E89C1809141F005B4F9F /* Thread.h */,
 				BBF9E89D18092075005B4F9F /* Thread.cpp */,
 			);
-			path = App;
+			name = basic;
+			sourceTree = "<group>";
+		};
+		BBF9E8A318095CF8005B4F9F /* udp */ = {
+			isa = PBXGroup;
+			children = (
+				BBF9E8A718095D1D005B4F9F /* UdpSocket.cpp */,
+				BBF9E8A818095D1D005B4F9F /* UdpSocket.h */,
+				BBF9E8AD18095D5A005B4F9F /* UdpSlice.cpp */,
+				BBF9E8AE18095D5A005B4F9F /* UdpSlice.h */,
+			);
+			name = udp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +159,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBF9E8A918095D1D005B4F9F /* UdpSocket.cpp in Sources */,
+				BBF9E8AF18095D5A005B4F9F /* UdpSlice.cpp in Sources */,
+				BBF9E8A218095C27005B4F9F /* Test.cpp in Sources */,
 				BBBB3DD617C76EE30075D896 /* main.cpp in Sources */,
 				BBF9E89E18092075005B4F9F /* Thread.cpp in Sources */,
 			);

@@ -7,58 +7,37 @@
 //
 
 #include <iostream>
-#include "Queue.h"
-#include "Thread.h"
-#include <unistd.h>
+#include "Test.h"
+#include "UdpSocket.h"
 
 using namespace std;
 
-class Container:public Thread
+
+class Receive:public Thread
 {
-private:
-    BlockingQueue<string> m_queue;
-    bool isRunning = true;
+    UdpSocket& m_udp;
 public:
-    void onMsg(string* msg)
+    Receive(UdpSocket& udpSocket):m_udp(udpSocket)
     {
-        m_queue.push(msg);
     }
     void run()
     {
-        while (isRunning) {
-            string * msg = m_queue.pop();
-            cout<<*msg<<endl;
-            delete msg;
-            msg = NULL;
+        while (true) {
+            char buff[4096];
+            int length = 0;
+            char ip[16];
+            int port = 0;
+            
+            m_udp.receive((char**)&buff, &length, (char**)&ip, &port);
+            
+            
+            if (length!=-1) {
+                cout<<buff<<endl<<"ip is "<<ip<<",port is "<<port<<endl;
+            }
+            
         }
     }
-    void stop()
-    {
-        isRunning = false;
-    }
 };
-
-class Sender
-{
-private:
-    Container& m_owner;
-    int num=0;
-public:
-    Sender(Container& container):m_owner(container)
-    {
-    }
-    
-    void send(string& msg)
-    {
-        char s_num[16];
-        snprintf(s_num, 16, "%d",num);
-        msg.append(s_num);
-        m_owner.onMsg(&msg);
-        num++;
-    }
-};
-
-
 
 int main(int argc, const char * argv[])
 {
@@ -68,9 +47,24 @@ int main(int argc, const char * argv[])
     for (int i=0; i<10; i++) {
         string* msg = new string("the msg is number");
         sender.send(*msg);
-        sleep(1);
     }
     container.stop();
+    //int testSize = 1000000;
+    //testQueue(testSize);
+    //testMutilQueue(testSize);
+    UdpSocket socket1;
+    UdpSocket socket2;
+    socket1.init("0.0.0.0", 18080);
+    
+    socket2.init("0.0.0.0", 18081);
+    Receive re(socket2);
+    re.start();
+    for (int i=0; i<10000; i++) {
+        socket1.send("Hello", sizeof("Hello"), "0.0.0.0", 18081);
+    }
+   
+    sleep(200);
+    
     return 0;
 }
 
