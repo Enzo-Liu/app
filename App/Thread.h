@@ -31,9 +31,10 @@ public:
     
     pthread_t getId() { return _tid; }
     
+    void stop(){isRunning=false;};
 protected:
     virtual void run() = 0;
-
+    bool isRunning=true;
     pthread_t      _tid;
 private:
     static void* THREAD_CALL ThreadFunc( void* aArg );

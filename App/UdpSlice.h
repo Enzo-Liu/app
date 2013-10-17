@@ -11,4 +11,20 @@
 
 #include <iostream>
 
+using namespace std;
+
+class UdpSlice
+{
+public:
+    int msgId;
+    int sliceId;
+    int totalNum;
+    char ip[16];
+    int port;
+    char data[1000]={0};
+    void genKey(string& key);
+    void encode(char* buff,char * ip,int port);
+    bool decode(char*buff,int length,char * ip,int port);
+};
+
 #endif /* defined(__App__UdpSlice__) */

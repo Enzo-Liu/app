@@ -15,6 +15,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
+#include "UdpConst.h"
 
 class UdpSocket
 {
@@ -22,9 +24,11 @@ private:
     int sockfd;
     struct sockaddr_in host_addr;
 public:
+    UdpSocket();
+    ~UdpSocket();
     void init(const char * ip,int port);
     void send(char* buff,int length,const char * ip,int port);
-    void receive(char** buff, int* length,char **ip, int* port);
+    void receive(char* buff, int* length,char *ip, int* port);
 };
 
 #endif /* defined(__App__UdpSocket__) */

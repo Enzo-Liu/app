@@ -23,16 +23,16 @@ public:
     void run()
     {
         while (true) {
-            char buff[4096];
+            char buff[BUFF_SIZE];
             int length = 0;
-            char ip[16];
+            char ip[IP_SIZE];
             int port = 0;
             
-            m_udp.receive((char**)&buff, &length, (char**)&ip, &port);
+            m_udp.receive(buff, &length, ip, &port);
             
             
             if (length!=-1) {
-                cout<<buff<<endl<<"ip is "<<ip<<",port is "<<port<<endl;
+                cout<<"buff is "<<buff<<" length is "<<length<<endl<<"ip is "<<ip<<",port is "<<port<<endl;
             }
             
         }
@@ -54,13 +54,15 @@ int main(int argc, const char * argv[])
     //testMutilQueue(testSize);
     UdpSocket socket1;
     UdpSocket socket2;
-    socket1.init("0.0.0.0", 18080);
+    socket1.init("0.0.0.0", 38080);
     
-    socket2.init("0.0.0.0", 18081);
+    socket2.init("0.0.0.0", 38081);
     Receive re(socket2);
     re.start();
-    for (int i=0; i<10000; i++) {
-        socket1.send("Hello", sizeof("Hello"), "0.0.0.0", 18081);
+    char content[16];
+    snprintf(content, 16, "Hello");
+    for (int i=0; i<10; i++) {
+        socket1.send(content, 100, "0.0.0.0", 38081);
     }
    
     sleep(200);
