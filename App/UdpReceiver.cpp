@@ -51,31 +51,10 @@ void UdpReceiver::receive()
     if (length==-1 || length==BUFF_SIZE)
         return;
     
-    UdpSlice *slice = decode(buff,length,ip,port);
+    UdpSlice *slice = UdpSlice::decode(buff,length,ip,port);
     if (slice==NULL) return;
     
     analyseSlice(slice);
 };
 
-UdpSlice* UdpReceiver::decode(char *buff, int length, char *ip, int port)
-{
-    if(*buff++ != 0x0d&&*buff++!= 0x0a&&*buff++!= 0x0d&&*buff++!= 0x0a)
-        return NULL;
-    if (*buff++!= 'l') return NULL;
-    int total=*buff++;
-    int cur = *buff++;
-    if (cur>total) return NULL;
-    int msgId = 0;
-    msgId += (*(buff+3)<<24)+(*(buff+2)<<16)+(*(buff+1)<<8)+*buff;
-    buff = buff+4;
-    
-    UdpSlice* slice = new UdpSlice();
-    slice->msgId = msgId;
-    slice->sliceId = cur;
-    slice->totalNum = total;
-    slice->port = port;
-    snprintf(slice->ip, IP_SIZE, "%s",ip);
-    snprintf(slice->data, strlen(buff), "%s",buff);
-    return slice;
-}
 

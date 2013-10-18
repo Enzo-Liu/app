@@ -10,6 +10,7 @@
 #define __App__UdpSlice__
 
 #include <iostream>
+#include "UdpConst.h"
 
 using namespace std;
 
@@ -24,7 +25,7 @@ public:
     char data[1000]={0};
     void genKey(string& key);
     void encode(char* buff,char * ip,int port);
-    bool decode(char*buff,int length,char * ip,int port);
+    static UdpSlice * decode(char*buff,int length,char*ip,int port);
 };
 
 #endif /* defined(__App__UdpSlice__) */

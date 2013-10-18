@@ -28,7 +28,7 @@ public:
     {
     }
     
-    UdpSlice * decode(char*buff,int length,char*ip,int port);
+   
     
     void receive();
     
