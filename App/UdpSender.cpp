@@ -13,8 +13,7 @@ void UdpSender::send(UdpSlice &slice)
     memset(buff, 0, BUFF_SIZE);
     
     slice.encode(buff);
-    int length = (int)strlen(buff);
-    socket.send(buff, length, slice.ip, slice.port);
+    socket.send(buff, BUFF_SIZE-1, slice.ip, slice.port);
 }
 
 void UdpSender::send(UdpMsg& udpMsg)

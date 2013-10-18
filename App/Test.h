@@ -13,6 +13,7 @@
 #include "Queue.h"
 #include "Thread.h"
 #include <unistd.h>
+#include "UdpSocket.h"
 #include <ctime>
 
 void testQueue(int testSize);
@@ -63,5 +64,33 @@ public:
     }
 };
 
+class Receive:public Thread
+{
+    UdpSocket& m_udp;
+public:
+    Receive(UdpSocket& udpSocket):m_udp(udpSocket)
+    {
+    }
+    void run()
+    {
+        while (true) {
+            char buff[BUFF_SIZE];
+            int length = 0;
+            char ip[IP_SIZE];
+            int port = 0;
+            
+            m_udp.receive(buff, &length, ip, &port);
+            
+            
+            if (length!=-1) {
+                cout<<"buff is "<<buff<<" length is "<<length<<endl<<"ip is "<<ip<<",port is "<<port<<endl;
+            }
+            
+        }
+    }
+};
+
+
+void test();
 
 #endif /* defined(__App__Test__) */

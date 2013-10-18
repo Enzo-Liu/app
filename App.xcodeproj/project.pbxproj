@@ -10,6 +10,7 @@
 		BB73E64818100FA4009377F7 /* UdpMsg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB73E64618100FA4009377F7 /* UdpMsg.cpp */; };
 		BB73E64B1810108F009377F7 /* UdpReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB73E6491810108F009377F7 /* UdpReceiver.cpp */; };
 		BB73E64F181110A1009377F7 /* UdpSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB73E64D181110A1009377F7 /* UdpSender.cpp */; };
+		BB73E65218112EB2009377F7 /* Udp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB73E65018112EB2009377F7 /* Udp.cpp */; };
 		BBBB3DD617C76EE30075D896 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBBB3DD517C76EE30075D896 /* main.cpp */; };
 		BBBB3DD817C76EE30075D896 /* App.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBBB3DD717C76EE30075D896 /* App.1 */; };
 		BBF9E89E18092075005B4F9F /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBF9E89D18092075005B4F9F /* Thread.cpp */; };
@@ -42,6 +43,8 @@
 		BB73E64C181013E5009377F7 /* UdpContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UdpContainer.h; sourceTree = "<group>"; };
 		BB73E64D181110A1009377F7 /* UdpSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UdpSender.cpp; sourceTree = "<group>"; };
 		BB73E64E181110A1009377F7 /* UdpSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSender.h; sourceTree = "<group>"; };
+		BB73E65018112EB2009377F7 /* Udp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Udp.cpp; sourceTree = "<group>"; };
+		BB73E65118112EB2009377F7 /* Udp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Udp.h; sourceTree = "<group>"; };
 		BBBB3DD217C76EE30075D896 /* App */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = App; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBBB3DD517C76EE30075D896 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		BBBB3DD717C76EE30075D896 /* App.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = App.1; sourceTree = "<group>"; };
@@ -120,6 +123,8 @@
 				BB73E64E181110A1009377F7 /* UdpSender.h */,
 				BBF9E8A818095D1D005B4F9F /* UdpSocket.h */,
 				BB73E64618100FA4009377F7 /* UdpMsg.cpp */,
+				BB73E65018112EB2009377F7 /* Udp.cpp */,
+				BB73E65118112EB2009377F7 /* Udp.h */,
 				BB73E64718100FA4009377F7 /* UdpMsg.h */,
 				BBF9E8AD18095D5A005B4F9F /* UdpSlice.cpp */,
 				BBF9E8AE18095D5A005B4F9F /* UdpSlice.h */,
@@ -178,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB73E65218112EB2009377F7 /* Udp.cpp in Sources */,
 				BB73E64F181110A1009377F7 /* UdpSender.cpp in Sources */,
 				BB73E64B1810108F009377F7 /* UdpReceiver.cpp in Sources */,
 				BBF9E8A918095D1D005B4F9F /* UdpSocket.cpp in Sources */,

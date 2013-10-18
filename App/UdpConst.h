@@ -12,7 +12,7 @@
 const int BUFF_SIZE=1000;
 const int IP_SIZE = 16;
 const int SOCKET_BUFF_SIZE = 400*1024;//设置SOCKET缓冲区大小为400K
-const int SLICE_DATA_SIZE=989;
+const int SLICE_DATA_SIZE=988;
 
 
 #endif

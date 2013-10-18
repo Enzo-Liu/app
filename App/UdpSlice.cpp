@@ -26,7 +26,7 @@ void UdpSlice::genKey(string &key)
 
 UdpSlice* UdpSlice::decode(char *buff, int length, char *ip, int port)
 {
-    if(*buff++ != 0x0d&&*buff++!= 0x0a&&*buff++!= 0x0d&&*buff++!= 0x0a)
+    if(*buff++ != 0x0d||*buff++!= 0x0a||*buff++!= 0x0d||*buff++!= 0x0a)
         return NULL;
     if (*buff++!= 'l') return NULL;
     int total=*buff++;
@@ -42,7 +42,17 @@ UdpSlice* UdpSlice::decode(char *buff, int length, char *ip, int port)
     slice->totalNum = total;
     slice->port = port;
     snprintf(slice->ip, IP_SIZE, "%s",ip);
-    snprintf(slice->data, SLICE_DATA_SIZE, "%s",buff);
+    if (cur==1) {
+        int i = 0;
+        while (i<SLICE_DATA_SIZE) {
+            *(slice->data+i) = *(buff+i);
+            i++;
+        }
+    }
+    else
+    {
+        snprintf(slice->data, SLICE_DATA_SIZE, "%s",buff);
+    }
     return slice;
 }
 
@@ -59,6 +69,14 @@ void UdpSlice::encode(char *buff)
     for (int i=0; i<4; i++) {
         (*buff++) = (char)t_msgId;
         t_msgId=t_msgId>>8;
+    }
+    if (sliceId==1) {
+        int i = 0;
+        while (i<SLICE_DATA_SIZE) {
+            *(buff+i)=*(data+i);
+            i++;
+        }
+        return;
     }
     snprintf(buff, SLICE_DATA_SIZE, "%s",data);
 }

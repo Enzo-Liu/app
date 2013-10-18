@@ -74,3 +74,33 @@ void testMutilQueue(int testSize )
     delete[] c_str;
 }
 
+void test()
+{
+    {
+        Container container;
+        container.start();
+        Sender sender(container);
+        for (int i=0; i<10; i++) {
+            string* msg = new string("the msg is number");
+            sender.send(*msg);
+        }
+        container.stop();
+        //int testSize = 1000000;
+        //testQueue(testSize);
+        //testMutilQueue(testSize);
+        UdpSocket socket1;
+        UdpSocket socket2;
+        socket1.init("0.0.0.0", 38080);
+        
+        socket2.init("0.0.0.0", 38081);
+        Receive re(socket2);
+        re.start();
+        char content[16];
+        snprintf(content, 16, "Hello");
+        for (int i=0; i<10; i++) {
+            socket1.send(content, 100, "0.0.0.0", 38081);
+        }
+        
+        sleep(200);
+    }
+}

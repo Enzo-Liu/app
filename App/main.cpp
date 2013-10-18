@@ -9,65 +9,40 @@
 #include <iostream>
 #include "Test.h"
 #include "UdpSocket.h"
+#include "UdpSender.h"
+#include "UdpReceiver.h"
 
 using namespace std;
 
 
-class Receive:public Thread
+class Con:public UdpContainer
 {
-    UdpSocket& m_udp;
 public:
-    Receive(UdpSocket& udpSocket):m_udp(udpSocket)
+    void onMsg(UdpMsg* msg)
     {
-    }
-    void run()
-    {
-        while (true) {
-            char buff[BUFF_SIZE];
-            int length = 0;
-            char ip[IP_SIZE];
-            int port = 0;
-            
-            m_udp.receive(buff, &length, ip, &port);
-            
-            
-            if (length!=-1) {
-                cout<<"buff is "<<buff<<" length is "<<length<<endl<<"ip is "<<ip<<",port is "<<port<<endl;
-            }
-            
-        }
+        cout<<msg->data<<endl;
     }
 };
 
-
 int main(int argc, const char * argv[])
 {
-    Container container;
-    container.start();
-    Sender sender(container);
-    for (int i=0; i<10; i++) {
-        string* msg = new string("the msg is number");
-        sender.send(*msg);
-    }
-    container.stop();
-    //int testSize = 1000000;
-    //testQueue(testSize);
-    //testMutilQueue(testSize);
     UdpSocket socket1;
     UdpSocket socket2;
     socket1.init("0.0.0.0", 38080);
     
     socket2.init("0.0.0.0", 38081);
-    Receive re(socket2);
+    Con con;
+    UdpReceiver re(socket1,con);
+    UdpSender se(socket2);
+    se.start();
     re.start();
-    char content[16];
-    snprintf(content, 16, "Hello");
-    for (int i=0; i<10; i++) {
-        socket1.send(content, 100, "0.0.0.0", 38081);
-    }
-   
+    UdpMsg msg;
+    msg.data = "test send Msg";
+    msg.ipAddr = "0.0.0.0:38080";
+    msg.userAccount = "liu";
+    msg.code = 1;
+    se.send(msg);
     sleep(200);
-    
     return 0;
 }
 

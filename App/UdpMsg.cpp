@@ -33,9 +33,10 @@ UdpSlice** UdpMsg::makeSlice()
         slice->port = port;
         slice->totalNum = sliceNum;
         slice->sliceId = i+1;
-        
+
         if (i==0) {
-            snprintf(slice->data, expandSize, "c:%c%c%c%c;u:%s;",(char)code,(char)code>>8,(char)code>>16,(char)code>>24,c_userAccount);
+            snprintf(slice->data, expandSize, "c:%c%c%c%c;u:%s",(char)code,(char)code>>8,(char)code>>16,(char)code>>24,c_userAccount);
+            slice->data[expandSize-1]=';';
             snprintf(slice->data+expandSize, SLICE_DATA_SIZE-expandSize-1,"%s",c_data+cur);
             cur = SLICE_DATA_SIZE-expandSize-1;
         }
@@ -55,7 +56,7 @@ UdpMsg* UdpMsg::combineSlice(UdpSlice **slices)
     UdpSlice* slice = slices[0];
     int total = slice->totalNum;
     char * t_data = slice->data;
-    if (!(t_data[0]=='c'&&t_data[1]==':'&&t_data[6]=='u'&&t_data[7]==':')) {
+    if (!(t_data[0]=='c'&&t_data[1]==':'&&t_data[6]==';'&&t_data[7]=='u'&&t_data[8]==':')) {
         return NULL;
     }
     UdpMsg& msg = *(new UdpMsg());
@@ -69,7 +70,7 @@ UdpMsg* UdpMsg::combineSlice(UdpSlice **slices)
     t_data += 8;
     char * realData = strchr(t_data, ';');
     *realData = 0;realData++;
-    msg.userAccount = t_data;
+    msg.userAccount = t_data+1;
     
     msg.data.resize(SLICE_DATA_SIZE*total);
     msg.data = realData;
