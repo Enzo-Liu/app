@@ -17,14 +17,14 @@ using namespace std;
 class UdpSlice
 {
 public:
-    int msgId;
-    int sliceId;
-    int totalNum;
-    char ip[16];
-    int port;
-    char data[1000]={0};
+    int msgId=0;
+    int sliceId=0;
+    int totalNum=0;
+    char ip[16]={0};
+    int port=0;
+    char data[SLICE_DATA_SIZE]={0};
     void genKey(string& key);
-    void encode(char* buff,char * ip,int port);
+    void encode(char* buff);
     static UdpSlice * decode(char*buff,int length,char*ip,int port);
 };
 

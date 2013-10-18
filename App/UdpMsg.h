@@ -10,16 +10,20 @@
 #define __App__UdpMsg__
 
 #include <iostream>
+#include "UdpSlice.h"
 
 using namespace std;
 
 class UdpMsg
 {
-private:
+public:
     int code;
     string ipAddr;
     string data;
     string userAccount;
+public:
+    UdpSlice** makeSlice();
+    static UdpMsg* combineSlice(UdpSlice** slices);
 };
 
 #endif /* defined(__App__UdpMsg__) */

@@ -33,7 +33,7 @@ UdpSlice* UdpSlice::decode(char *buff, int length, char *ip, int port)
     int cur = *buff++;
     if (cur>total) return NULL;
     int msgId = 0;
-    msgId += (*(buff+3)<<24)+(*(buff+2)<<16)+(*(buff+1)<<8)+*buff;
+    msgId = (*(buff+3)<<24)+(*(buff+2)<<16)+(*(buff+1)<<8)+*buff;
     buff = buff+4;
     
     UdpSlice* slice = new UdpSlice();
@@ -42,7 +42,23 @@ UdpSlice* UdpSlice::decode(char *buff, int length, char *ip, int port)
     slice->totalNum = total;
     slice->port = port;
     snprintf(slice->ip, IP_SIZE, "%s",ip);
-    snprintf(slice->data, strlen(buff), "%s",buff);
+    snprintf(slice->data, SLICE_DATA_SIZE, "%s",buff);
     return slice;
 }
 
+void UdpSlice::encode(char *buff)
+{
+    (*buff++)=0x0d;
+    (*buff++)=0x0a;
+    (*buff++)=0x0d;
+    (*buff++)=0x0a;
+    (*buff++)='l';
+    (*buff++)=(char)totalNum;
+    (*buff++)=(char)sliceId;
+    int t_msgId = this->msgId;
+    for (int i=0; i<4; i++) {
+        (*buff++) = (char)t_msgId;
+        t_msgId=t_msgId>>8;
+    }
+    snprintf(buff, SLICE_DATA_SIZE, "%s",data);
+}

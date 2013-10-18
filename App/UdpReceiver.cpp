@@ -8,14 +8,18 @@
 
 #include "UdpReceiver.h"
 
-void UdpReceiver::analyseSlice(UdpSlice* slice)
+UdpMsg* UdpReceiver::analyseSlice(UdpSlice* slice)
 {
+    UdpMsg* msg = NULL;
     int total=slice->totalNum;
     int cur = slice->sliceId;
     
     if (total==1) {
-        //TODO it is a full udpMsg
-        return;
+        
+        msg = UdpMsg::combineSlice(&slice);
+        delete slice;
+        slice = NULL;
+        return msg;
     }
     string key;
     slice->genKey(key);
@@ -24,26 +28,32 @@ void UdpReceiver::analyseSlice(UdpSlice* slice)
         slices = new UdpSlice*[total];
         sliceMap.insert(make_pair(key,slices));
         slices[cur]=slice;
-        return;
+        return NULL;
     }
     slices[cur]=slice;
     for (int i = 0; i<total; i++) {
         if (slices[i]==NULL) {
-            return;
+            return NULL;
         }
     }
-    //TODO it has collected all the right msg
+    
+    msg = UdpMsg::combineSlice(slices);
+    sliceMap.erase(key);
+    
     for (int i = 0; i<total; i++) {
-        return;
+        delete slices[i];
+        slices[i]=NULL;
     }
+    delete[] slices;
+    slices = NULL;
+    return msg;
 };
 
 void UdpReceiver::receive()
 {
-    char buff[BUFF_SIZE];
+    
     memset(buff, 0, BUFF_SIZE);
     int length = 0;
-    char ip[IP_SIZE];
     memset(ip, 0, IP_SIZE);
     int port = 0;
     udpSocket.receive(buff, &length, ip, &port);
@@ -54,7 +64,10 @@ void UdpReceiver::receive()
     UdpSlice *slice = UdpSlice::decode(buff,length,ip,port);
     if (slice==NULL) return;
     
-    analyseSlice(slice);
+    UdpMsg* msg = analyseSlice(slice);
+    if (msg!= NULL) {
+        container.onMsg(msg);
+    }
 };
 
 

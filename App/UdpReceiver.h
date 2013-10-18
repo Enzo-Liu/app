@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include "UdpSocket.h"
-#include "UdpSlice.h"
+#include "UdpMsg.h"
 #include "Thread.h"
 #include "UdpContainer.h"
 #include <unordered_map>
@@ -22,13 +22,11 @@ private:
     UdpSocket& udpSocket;
     UdpContainer& container;
     unordered_map<string, UdpSlice**> sliceMap;
-    void analyseSlice(UdpSlice* slice);
+    UdpMsg* analyseSlice(UdpSlice* slice);
 public:
     UdpReceiver(UdpSocket& socket,UdpContainer& container):udpSocket(socket),container(container)
     {
     }
-    
-   
     
     void receive();
     
@@ -38,5 +36,9 @@ public:
             receive();
         }
     }
+    
+private:
+    char buff[BUFF_SIZE];
+    char ip[IP_SIZE];
 };
 #endif /* defined(__App__UdpReceiver__) */
