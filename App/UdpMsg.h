@@ -17,6 +17,7 @@ using namespace std;
 class UdpMsg
 {
 public:
+    int msgId;
     int code;
     string ipAddr;
     string data;

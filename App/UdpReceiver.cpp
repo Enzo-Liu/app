@@ -23,14 +23,18 @@ UdpMsg* UdpReceiver::analyseSlice(UdpSlice* slice)
     }
     string key;
     slice->genKey(key);
-    UdpSlice** slices = sliceMap[key];
+    UdpSlice** slices = NULL;
+    unordered_map<string, UdpSlice**>::iterator iter = sliceMap.find(key);
+    if(iter!=sliceMap.end())
+        slices = iter->second;
+    
     if (slices==NULL) {
-        slices = new UdpSlice*[total];
+        slices = new UdpSlice*[total]();
         sliceMap.insert(make_pair(key,slices));
-        slices[cur]=slice;
+        slices[cur-1]=slice;
         return NULL;
     }
-    slices[cur]=slice;
+    slices[cur-1]=slice;
     for (int i = 0; i<total; i++) {
         if (slices[i]==NULL) {
             return NULL;
@@ -63,7 +67,6 @@ void UdpReceiver::receive()
     
     UdpSlice *slice = UdpSlice::decode(buff,length,ip,port);
     if (slice==NULL) return;
-    
     UdpMsg* msg = analyseSlice(slice);
     if (msg!= NULL) {
         container.onMsg(msg);

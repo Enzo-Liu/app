@@ -24,7 +24,7 @@ UdpSlice** UdpMsg::makeSlice()
     int sliceNum =(int) length/(SLICE_DATA_SIZE-1);
     sliceNum = (sliceNum*(SLICE_DATA_SIZE-1)==length)?sliceNum:sliceNum+1;
     
-    UdpSlice** slices = new UdpSlice*[sliceNum];
+    UdpSlice** slices = new UdpSlice*[sliceNum]();
     UdpSlice* slice = NULL;
     int cur = 0;
     for (int i=0; i<sliceNum; i++) {
@@ -33,7 +33,7 @@ UdpSlice** UdpMsg::makeSlice()
         slice->port = port;
         slice->totalNum = sliceNum;
         slice->sliceId = i+1;
-
+        slice->msgId = msgId;
         if (i==0) {
             snprintf(slice->data, expandSize, "c:%c%c%c%c;u:%s",(char)code,(char)code>>8,(char)code>>16,(char)code>>24,c_userAccount);
             slice->data[expandSize-1]=';';
@@ -61,7 +61,8 @@ UdpMsg* UdpMsg::combineSlice(UdpSlice **slices)
     }
     UdpMsg& msg = *(new UdpMsg());
     
-    msg.code = (t_data[5]<<24)+(t_data[4]<<16)+(t_data[3]<<8)+t_data[2];
+    msg.code = (((unsigned char)t_data[5])<<24)+(((unsigned char)t_data[4])<<16)+(((unsigned char)t_data[3])<<8)+((unsigned char)t_data[2]);
+    msg.msgId = slice->msgId;
     
     char port[16]={0};
     snprintf(port, 15, "%d",slice->port);

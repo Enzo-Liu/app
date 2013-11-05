@@ -16,7 +16,7 @@
 
 using namespace std;
 
-static int DEFAULT_SIZE = 10000;
+static int DEFAULT_SIZE = 10000000;
 
 template <typename Msg>
 class Fifo
@@ -49,6 +49,10 @@ protected:
         {
             m_deque.push_back(msg);
             m_size++;
+        }
+        else
+        {
+            printf("the queue is over flow");
         }
     }
     

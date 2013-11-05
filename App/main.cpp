@@ -17,10 +17,16 @@ using namespace std;
 
 class Con:public UdpContainer
 {
+private:
+    int size = 0;
 public:
     void onMsg(UdpMsg* msg)
     {
-        cout<<msg->data<<endl;
+        size++;
+        if(size%100==99)
+        cout<<"msgId is "<<msg->msgId<<"size is "<<size<<endl;
+        delete msg;
+        msg = NULL;
     }
 };
 
@@ -37,12 +43,22 @@ int main(int argc, const char * argv[])
     se.start();
     re.start();
     UdpMsg msg;
-    msg.data = "test send Msg";
+    msg.data = "test send Msg with size more than 1k:";
+    for (int i=0; i<1000; i++) {
+        msg.data.append("buff to set again and again;");
+    }
     msg.ipAddr = "0.0.0.0:38080";
     msg.userAccount = "liu";
     msg.code = 1;
-    se.send(msg);
+    time_t t1 = clock();
+    for (int i=0; i<300000; i++) {
+        msg.msgId = i;
+        se.send(msg);
+    }
+    time_t t2 = clock();
+    cout<<"send cost time is "<<t2-t1<<endl;
     sleep(200);
+    
     return 0;
 }
 

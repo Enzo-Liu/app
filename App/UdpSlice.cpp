@@ -10,18 +10,18 @@
 
 void UdpSlice::genKey(string &key)
 {
-    char t_key[32]={0};
-    char t_port[5]={0};
-    char t_msgId[5]={0};
-    char t_totalNum[5]={0};
-    int i_port = port,i_msgId = msgId,i_totalNum=totalNum;
-    for (int i=0; i<4; i++) {
-        t_port[i] = (char)i_port;i_port=i_port>>8;
-        t_msgId[i] = (char)i_msgId;i_msgId=i_msgId>>8;
-        t_totalNum[i] = (char)i_totalNum;i_totalNum=i_totalNum>>8;
-    }
-    snprintf(t_key, 32, "i%sp%sm%st%s",ip,t_port,t_msgId,t_totalNum);
-    key=t_key;
+    key += "ip:";
+    char temp[16];
+    key += ip;
+    memset(temp,0,16);
+    snprintf(temp, 16, ";%s%d","p:",port);
+    key += temp;
+    memset(temp,0,16);
+    snprintf(temp, 16, ";%s%d","m:",msgId);
+    key += temp;
+    memset(temp,0,16);
+    snprintf(temp, 16, ";%s%d","t:",totalNum);
+    key += temp;
 }
 
 UdpSlice* UdpSlice::decode(char *buff, int length, char *ip, int port)
@@ -29,11 +29,11 @@ UdpSlice* UdpSlice::decode(char *buff, int length, char *ip, int port)
     if(*buff++ != 0x0d||*buff++!= 0x0a||*buff++!= 0x0d||*buff++!= 0x0a)
         return NULL;
     if (*buff++!= 'l') return NULL;
-    int total=*buff++;
-    int cur = *buff++;
+    int total=(unsigned char)*buff++;
+    int cur = (unsigned char)*buff++;
     if (cur>total) return NULL;
     int msgId = 0;
-    msgId = (*(buff+3)<<24)+(*(buff+2)<<16)+(*(buff+1)<<8)+*buff;
+    msgId = (((unsigned char)*(buff+3))<<24)+(((unsigned char)*(buff+2))<<16)+(((unsigned char)*(buff+1))<<8)+((unsigned char)*buff);
     buff = buff+4;
     
     UdpSlice* slice = new UdpSlice();
@@ -63,11 +63,11 @@ void UdpSlice::encode(char *buff)
     (*buff++)=0x0d;
     (*buff++)=0x0a;
     (*buff++)='l';
-    (*buff++)=(char)totalNum;
-    (*buff++)=(char)sliceId;
+    (*buff++)=(unsigned char)totalNum;
+    (*buff++)=(unsigned char)sliceId;
     int t_msgId = this->msgId;
     for (int i=0; i<4; i++) {
-        (*buff++) = (char)t_msgId;
+        (*buff++) = (unsigned char)t_msgId;
         t_msgId=t_msgId>>8;
     }
     if (sliceId==1) {

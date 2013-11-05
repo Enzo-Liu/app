@@ -36,6 +36,7 @@ public:
             slice = sendQueue.pop();
             if (slice != NULL) {
                 send(*slice);
+                usleep(1);
                 delete slice;
                 slice = NULL;
             }
